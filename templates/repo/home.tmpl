@@ -4,6 +4,7 @@
 	<div class="ui container">
 		{{template "base/alert" .}}
 		{{if .PageIsRepoHome}}
+			{{if not .IsPasteRepo}}
 			<p id="repo-desc">
 				{{if .Repository.Description}}<span class="description has-emoji">{{.Repository.Description | Str2html}}</span>{{else}}<span class="no-description text-italic">{{.i18n.Tr "repo.no_desc"}}</span>{{end}}
 				<a class="link" href="{{.Repository.Website}}">{{.Repository.Website}}</a>
@@ -21,8 +22,11 @@
 					</div>
 				</div>
 			</div>
+			{{end}}
 		{{end}}
 		<div class="ui secondary menu">
+			{{ $n := len .TreeNames}}
+			{{if not .IsPasteRepo}}
 			{{if .PullRequestCtx.Allowed}}
 				<div class="fitted item">
 					<a href="{{.BaseRepo.Link}}/compare/{{.BaseRepo.DefaultBranch}}...{{.PullRequestCtx.HeadInfo}}">
@@ -34,7 +38,6 @@
 			<div class="fitted item">
 				<div class="ui breadcrumb">
 					<a class="section" href="{{.RepoLink}}/src/{{EscapePound .BranchName}}">{{EllipsisString .Repository.Name 15}}</a>
-					{{ $n := len .TreeNames}}
 					{{ $l := Subtract $n 1}}
 					{{range $i, $v := .TreeNames}}
 						<div class="divider"> / </div>
@@ -47,7 +50,8 @@
 					{{end}}
 				</div>
 			</div>
-			<div class="right fitted item">
+			{{end}}
+			<div class="{{if not .IsPasteRepo}}right {{end}} fitted item">
 				{{if .Repository.CanEnableEditor}}
 					<div id="file-buttons" class="ui tiny blue buttons">
 						{{if .CanAddFile}}

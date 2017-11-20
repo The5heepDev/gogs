@@ -131,14 +131,10 @@ func editFilePost(c *context.Context, f form.EditRepoFile, isNewFile bool) {
 	c.Data["IsNewFile"] = isNewFile
 
 	oldBranchName := c.Repo.BranchName
-	branchName := oldBranchName
+	branchName := "master"
 	oldTreePath := c.Repo.TreePath
 	lastCommit := f.LastCommit
 	f.LastCommit = c.Repo.Commit.ID.String()
-
-	if f.IsNewBrnach() {
-		branchName = f.NewBranchName
-	}
 
 	f.TreePath = strings.Trim(f.TreePath, " /")
 	treeNames, treePaths := getParentTreeFields(f.TreePath)

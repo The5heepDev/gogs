@@ -1,4 +1,5 @@
 <table id="repo-files-table" class="ui fixed single line table">
+	{{if not .IsPasteRepo}}
 	<thead>
 		<tr>
 			<th class="four wide">
@@ -17,6 +18,7 @@
 			<th class="three wide text grey right age">{{TimeSince .LatestCommit.Author.When $.Lang}}</th>
 		</tr>
 	</thead>
+	{{end}}
 	<tbody>
 		{{if .HasParentPath}}
 			<tr class="has-parent">
@@ -56,6 +58,6 @@
 		{{end}}
 	</tbody>
 </table>
-{{if and .ReadmeExist .IsTextFile}}
+{{if and (not .IsPasteRepo) (and .ReadmeExist .IsTextFile)}}
 	{{template "repo/view_file" .}}
 {{end}}

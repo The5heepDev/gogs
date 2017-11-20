@@ -1,11 +1,12 @@
 <div class="header-wrapper">
+{{$x := .IsPasteRepo}}
 {{with .Repository}}
 	<div class="ui container"><!-- start container -->
 		<div class="ui vertically padded grid head"><!-- start grid -->
 			<div class="column"><!-- start column -->
 				<div class="ui header">
 					<div class="ui huge breadcrumb">
-						<i class="mega-octicon octicon-{{if .IsPrivate}}lock{{else if .IsMirror}}repo-clone{{else if .IsFork}}repo-forked{{else}}repo{{end}}"></i>
+						<i class="mega-octicon octicon-{{if $x}}gist{{else if .IsPrivate}}lock{{else if .IsMirror}}repo-clone{{else if .IsFork}}repo-forked{{else}}repo{{end}}"></i>
 						<a href="{{AppSubURL}}/{{.Owner.Name}}">{{.Owner.Name}}</a>
 						<div class="divider"> / </div>
 						<a href="{{$.RepoLink}}">{{.Name}}</a>
@@ -13,7 +14,7 @@
 						{{if .IsFork}}<div class="fork-flag">{{$.i18n.Tr "repo.forked_from"}} <a href="{{.BaseRepo.Link}}">{{SubStr .BaseRepo.RelLink 1 -1}}</a></div>{{end}}
 					</div>
 
-					{{if not $.IsGuest}}
+					{{if and (not $x) (not $.IsGuest)}}
 						<div class="ui right">
 							<div class="ui labeled button" tabindex="0">
 								<a class="ui basic button" href="{{$.RepoLink}}/action/{{if $.IsWatchingRepo}}un{{end}}watch?redirect_to={{$.Link}}">
@@ -48,7 +49,7 @@
 		</div><!-- end grid -->
 	</div><!-- end container -->
 {{end}}
-{{if not .IsDiffCompare}}
+{{if not (or (not .IsDiffCompare) (not .IsPasteRepo))}}
 	<div class="ui tabs container">
 		<div class="ui tabular menu navbar">
 			{{if not $.IsGuest}}

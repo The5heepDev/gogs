@@ -1,0 +1,25 @@
+{{template "base/head" .}}
+<div class="repository quickstart">
+	{{template "paste/header" .}}
+	<div class="ui container">
+		<div class="ui grid">
+			<div class="sixteen wide column content">
+				{{template "base/alert" .}}
+				{{if .IsRepositoryAdmin}}
+					<h4 class="ui top attached header">Pastes</h4>
+					<div class="ui attached guide table segment">
+						<div class="item">
+							<h3>{{.i18n.Tr "repo.create_new_repo_command"}}</h3>
+							<div class="markdown">
+								<pre><code>
+this is a test
+								</code></pre>
+							</div>
+						</div>
+					{{end}}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{{template "base/footer" .}}

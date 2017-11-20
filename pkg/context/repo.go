@@ -240,6 +240,8 @@ func RepoAssignment(pages ...bool) macaron.Handler {
 			c.Data["IsWatchingRepo"] = models.IsWatching(c.User.ID, repo.ID)
 			c.Data["IsStaringRepo"] = models.IsStaring(c.User.ID, repo.ID)
 		}
+		
+		c.Data["IsPasteRepo"] = (repoName == "paste")
 
 		// repo is bare and display enable
 		if c.Repo.Repository.IsBare {

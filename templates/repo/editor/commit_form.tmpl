@@ -1,6 +1,6 @@
 <div class="commit-form-wrapper">
 	<img width="48" height="48" class="ui image commit-avatar" src="{{.LoggedUser.RelAvatarLink}}">
-	<div class="commit-form">
+	<div class="commit-form" {{if .IsPasteRepo}}style="display: none;"{{end}}> {{/* this is really hacky */}}
 		<h3>{{.i18n.Tr "repo.editor.commit_changes"}}</h3>
 		<div class="field">
 			<input name="commit_summary" placeholder="{{if .PageIsDelete}}{{.i18n.Tr "repo.editor.delete" .TreePath}}{{else if .PageIsUpload}}{{.i18n.Tr "repo.editor.upload_files_to_dir" .TreePath}}{{else if .IsNewFile}}{{.i18n.Tr "repo.editor.add_tmpl" .TreePath}}{{else}}{{.i18n.Tr "repo.editor.update" .TreePath}}{{end}}" value="{{.commit_summary}}" autofocus>
@@ -38,7 +38,7 @@
 		</div>
 	</div>
 	<button type="submit" class="ui green button">
-		{{.i18n.Tr "repo.editor.commit_changes"}}
+		{{if .IsPasteRepo}}{{.i18n.Tr "repo.editor.paste"}}{{else}}{{.i18n.Tr "repo.editor.commit_changes"}}{{end}}
 	</button>
 	<a class="ui button red" href="{{EscapePound $.BranchLink}}/{{EscapePound .TreePath}}">{{.i18n.Tr "repo.editor.cancel"}}</a>
 </div>
